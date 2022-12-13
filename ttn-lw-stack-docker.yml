@@ -1,0 +1,129 @@
+# Identity Server configuration
+# Email configuration for "10.10.103.5"
+is:
+  email:
+    sender-name: 'The Things Stack'
+    sender-address: 'noreply@10.10.103.5'
+    network:
+      name: 'The Things Stack'
+      console-url: 'https://10.10.103.5/console'
+      identity-server-url: 'https://10.10.103.5/oauth'
+
+    # If sending email with Sendgrid
+    # provider: sendgrid
+    # sendgrid:
+    #   api-key: '...'              # enter Sendgrid API key
+
+    # If sending email with SMTP
+    # provider: smtp
+    # smtp:
+    #   address:  '...'             # enter SMTP server address
+    #   username: '...'             # enter SMTP server username
+    #   password: '...'             # enter SMTP server password
+
+  # Web UI configuration for "10.10.103.5":
+  oauth:
+    ui:
+      canonical-url: 'https://10.10.103.5/oauth'
+      is:
+        base-url: 'https://10.10.103.5/api/v3'
+
+# HTTP server configuration
+http:
+  cookie:
+    block-key: ''                # generate 32 bytes (openssl rand -hex 32)
+    hash-key: ''                 # generate 64 bytes (openssl rand -hex 64)
+  metrics:
+    password: 'metrics'               # choose a password
+  pprof:
+    password: 'pprof'                 # choose a password
+
+# If using custom certificates:
+tls:
+  source: file
+  root-ca: /run/secrets/ca.pem
+  certificate: /run/secrets/cert.pem
+  key: /run/secrets/key.pem
+
+# Let's encrypt for "10.10.103.5"
+# tls:
+  # source: 'acme'
+  # acme:
+    # dir: '/var/lib/acme'
+    # email: 'you@10.10.103.5'
+    # hosts: ['10.10.103.5']
+    # default-host: '10.10.103.5'
+
+# If Gateway Server enabled, defaults for "10.10.103.5":
+gs:
+  mqtt:
+    public-address: '10.10.103.5:1882'
+    public-tls-address: '10.10.103.5:8882'
+  mqtt-v2:
+    public-address: '10.10.103.5:1881'
+    public-tls-address: '10.10.103.5:8881'
+
+# If Gateway Configuration Server enabled, defaults for "10.10.103.5":
+gcs:
+  basic-station:
+    default:
+      lns-uri: 'wss://10.10.103.5:8887'
+  the-things-gateway:
+    default:
+      mqtt-server: 'mqtts://10.10.103.5:8881'
+
+# Web UI configuration for "10.10.103.5":
+console:
+  ui:
+    canonical-url: 'https://10.10.103.5/console'
+    is:
+      base-url: 'https://10.10.103.5/api/v3'
+    gs:
+      base-url: 'https://10.10.103.5/api/v3'
+    gcs:
+      base-url: 'https://10.10.103.5/api/v3'
+    ns:
+      base-url: 'https://10.10.103.5/api/v3'
+    as:
+      base-url: 'https://10.10.103.5/api/v3'
+    js:
+      base-url: 'https://10.10.103.5/api/v3'
+    qrg:
+      base-url: 'https://10.10.103.5/api/v3'
+    edtc:
+      base-url: 'https://10.10.103.5/api/v3'
+
+  oauth:
+    authorize-url: 'https://10.10.103.5/oauth/authorize'
+    token-url: 'https://10.10.103.5/oauth/token'
+    logout-url: 'https://10.10.103.5/oauth/logout'
+    client-id: 'console'
+    client-secret: 'console'          # choose or generate a secret
+
+# If Application Server enabled, defaults for "10.10.103.5":
+as:
+  mqtt:
+    public-address: '10.10.103.5:1883'
+    public-tls-address: '10.10.103.5:8883'
+  webhooks:
+    downlink:
+      public-address: '10.10.103.5:1885/api/v3'
+
+# If Device Claiming Server enabled, defaults for "10.10.103.5":
+dcs:
+  oauth:
+    authorize-url: 'https://10.10.103.5/oauth/authorize'
+    token-url: 'https://10.10.103.5/oauth/token'
+    logout-url: 'https://10.10.103.5/oauth/logout'
+    client-id: 'device-claiming'
+    client-secret: 'device-claiming'          # choose or generate a secret
+  ui:
+    canonical-url: 'https://10.10.103.5/claim'
+    as:
+      base-url: 'https://10.10.103.5/api/v3'
+    dcs:
+      base-url: 'https://10.10.103.5/api/v3'
+    is:
+      base-url: 'https://10.10.103.5/api/v3'
+    ns:
+      base-url: 'https://10.10.103.5/api/v3'
